@@ -81,3 +81,22 @@ int GonzalezBinThresh(BYTE *Image, int *Histo,int Errorrate){
 
 ![coin_output_with_Gonzalez](https://user-images.githubusercontent.com/79912683/160520988-18f15e89-03c6-4be6-afa2-d044b73474d9.jpg)
 
+---
+### [Convolution]
+~~~c
+ for (int i = 1; i < H - 1; i++) { 
+        for (int j = 1; j < W - 1; j++) {
+            for (int m = -1; m <= 1; m++) { 
+                for (int n = -1; n <= 1; n++) { 
+                    SumProduct += Img[(i + m) * W + (j + n)] * Kernel[m + 1][n + 1];
+                }
+            }
+~~~
+> 2차원 배열의 index [i],[j] -> 1차원 배열의 index : [(i*W)+j]\
+> 1차원 배열의 index [k] -> 2차원 배열의 index : [k/W][k%W]
+
+> center를 기준으로 indexing하므로 i의 범위는 1~(H-2) , j의 범위는 1~(W-2) \
+> 주변 8개의 index 순회 by m,n \
+> m의 범위 -1 ~ 1, n의 범위 -1 ~ 1 \
+> 3x3 배열 -> center기준(i,j) -> 1차원 배열화\
+> [i-1][j-1]->[i-1,j]->[i-1,j+1]->[i,j-1]->[i,j]->[i,j+1]->[i+1,j-1]->[i+1,j]->[i+1,j+1]
